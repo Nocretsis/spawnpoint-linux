@@ -95,4 +95,4 @@ bash ./install.sh --no-alias
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[later]()

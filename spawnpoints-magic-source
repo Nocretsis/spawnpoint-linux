@@ -1,0 +1,28 @@
+export SPAWNPOINTS_FILE=~/.spawnpoints
+function spawnpoints() {
+    if [ $# -eq 0 ]; then
+        echo "spawnpoints: missing operand"
+        echo "Try 'spawnpoints --help' for more information."
+        return 1
+    fi
+    
+    if [ "$1" = "teleport" ] || [ "$1" = "tp" ]; then
+        [ -z "$2" ] && _num=1 || _num=$2
+        if [ $_num -lt 1 ]; then
+            echo invalid spawnpoint number
+            return 1
+        fi
+        _aim=$(sed -n "$_num"p $SPAWNPOINTS_FILE)
+        last=$(pwd)
+        if [ "$_aim" = "$last" ]; then
+            echo -e "[spawnpoint] already at \e[1;32m$_aim\e[0m"
+            return 0
+        fi
+        echo "cd $_aim && echo -e \"[spawnpoint] \e[1;32m$last\e[0m -> \e[1;32m$_aim\e[0m\" || echo \"[spawnpoint] failed to teleport\"" > ~/.spawnpoints-teleport-temp
+        source ~/.spawnpoints-teleport-temp
+        rm ~/.spawnpoints-teleport-temp
+        return 0
+    fi
+    
+    spawnpoints-manager $@
+}

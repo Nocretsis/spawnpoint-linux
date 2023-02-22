@@ -1,0 +1,8 @@
+# spawnpoint alias
+
+alias sp='spawnpoints'
+alias sp..='spawnpoints list'
+alias sp.ls='spawnpoints list'
+alias sp.tp='spawnpoints teleport'
+alias sp.rm='spawnpoints remove'
+alias sp.clr='spawnpoints clear'

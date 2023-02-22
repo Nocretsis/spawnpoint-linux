@@ -60,7 +60,7 @@ fi
 echo $((++_step)) > /dev/null
 # read flag:
 # --set-alias: set alias for spawnpoints to sp
-# --clear-alias: clear alias for spawnpoints
+# --no-alias: unset alias for spawnpoints
 
 #covering flag
 FLAG=("${FLAG[@]}" "$@")
@@ -75,7 +75,7 @@ for flag in "${FLAG[@]}"; do
             fi 
             shift
             ;;
-        --clear-alias )
+        --no-alias )
             if $(grep -q "source $loc_parent/spawnpoints-magic-alias" $SHELLRC); then
                 sed -i "/source $loc_parent\/spawnpoints-magic-alias/d" $SHELLRC
                 echo "[$_step] alias removed from $SHELLRC"

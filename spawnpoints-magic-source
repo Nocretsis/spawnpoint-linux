@@ -12,6 +12,10 @@ function spawnpoints() {
             echo invalid spawnpoint number
             return 1
         fi
+        if [ $_num -gt $(wc -l $SPAWNPOINTS_FILE | cut -d' ' -f1) ]; then
+            echo "Error: $_num is greater than number of lines"
+            return 1
+        fi
         _aim=$(sed -n "$_num"p $SPAWNPOINTS_FILE)
         last=$(pwd)
         if [ "$_aim" = "$last" ]; then

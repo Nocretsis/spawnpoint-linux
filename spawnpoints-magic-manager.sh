@@ -1,4 +1,6 @@
 #!/bin/bash
+__version__=0.1.0
+
 Usage() {
     Usage_simple
     echo -e \
@@ -66,6 +68,14 @@ case $1 in
         ;;
     *help | -h)
         Usage
+        exit 0
+        ;;
+    --version)
+        echo "SpawnPoints Magic for Linux $__version__"
+        exit 0
+        ;;
+    -v)
+        echo $__version__
         exit 0
         ;;
     *)

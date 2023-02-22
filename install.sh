@@ -2,7 +2,7 @@
 PATH_FOLDER_LINK=~/.local/bin
 SPAWNPOINTS_FILE=~/.spawnpoints
 SHELLRC=~/.bashrc
-FLAG='--set-alias'
+FLAG="--set-alias"
 # end of user defined variables
 
 
@@ -63,24 +63,26 @@ echo $((++_step)) > /dev/null
 # --no-alias: unset alias for spawnpoints
 
 #covering flag
+IFS=' ' read -r -a FLAG <<< "$FLAG"
 FLAG=("${FLAG[@]}" "$@")
 for flag in "${FLAG[@]}"; do
-    case FLAG in
-        --set-alias )
+    echo -n "[$_step] Checking flag: '$flag'"
+    case $flag in
+        "--set-alias")
             if $(grep -q "source $loc_parent/spawnpoints-magic-alias" $SHELLRC); then
-                echo "[$_step] alias already exists in $SHELLRC"
+                echo ">>> alias already exists in $SHELLRC"
             else
                 echo "source $loc_parent/spawnpoints-magic-alias" >> $SHELLRC
-                echo "[$_step] alias added to $SHELLRC"
+                echo ">>> alias added to $SHELLRC"
             fi 
             shift
             ;;
-        --no-alias )
+        "--no-alias")
             if $(grep -q "source $loc_parent/spawnpoints-magic-alias" $SHELLRC); then
-                sed -i "/source $loc_parent\/spawnpoints-magic-alias/d" $SHELLRC
-                echo "[$_step] alias removed from $SHELLRC"
+                sed -i '/spawnpoints-magic-alias/d' $SHELLRC
+                echo ">>> alias removed from $SHELLRC"
             else
-                echo "[$_step] alias does not exist in $SHELLRC"
+                echo ">>> alias does not exist in $SHELLRC"
             fi
             shift
             ;;
@@ -88,9 +90,9 @@ for flag in "${FLAG[@]}"; do
             break
             ;;
         * )
+            echo ">>> Unknown"
             ;;
     esac
-    echo $((++_step)) > /dev/null
 done 
 
 echo "[✓] Done!"
